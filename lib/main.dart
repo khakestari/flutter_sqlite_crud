@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './model/product.dart';
+import './database/dbhandler.dart';
+
 void main() {
   runApp(
     MaterialApp(
@@ -48,10 +51,38 @@ class _MyAppState extends State<MyApp> {
     this.price = double.parse(price);
   }
 
-  createData() {}
-  readData() {}
-  updateData() {}
-  deleteData() {}
+  createData(product) {
+    setState(() {
+      var dbHandler = DBHandler();
+      dbHandler.createP(product);
+    });
+  }
+
+  readData(String name) {
+    setState(() {
+      var dbHandler = DBHandler();
+      Future<Product> product = dbHandler.readP(name);
+      product.then((value) {
+        print(value.name);
+        print(value.description);
+        print(value.price);
+      });
+    });
+  }
+
+  updateData(product) {
+    setState(() {
+      var dbHandler = DBHandler();
+      dbHandler.updateP(product);
+    });
+  }
+
+  deleteData(String name) {
+    setState(() {
+      var dbHandler = DBHandler();
+      dbHandler.deleteP(name);
+    });
+  }
 
   // This widget is the root of your application.
   @override
@@ -97,53 +128,53 @@ class _MyAppState extends State<MyApp> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(100, 50),
+                    fixedSize: const Size(80, 50),
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: () {
-                    createData();
+                    createData(Product(name!, description!, price!));
                   },
                   child: const Text('Create'),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(100, 50),
+                    fixedSize: const Size(80, 50),
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: () {
-                    readData();
+                    readData(name!);
                   },
                   child: const Text('Read'),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(100, 50),
+                    fixedSize: const Size(80, 50),
                     backgroundColor: Colors.orange[500],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: () {
-                    updateData();
+                    updateData(Product(name!, description!, price!));
                   },
                   child: const Text('Update'),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(100, 50),
+                    fixedSize: const Size(80, 50),
                     backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: () {
-                    deleteData();
+                    deleteData(name!);
                   },
                   child: const Text('Delete'),
                 ),
