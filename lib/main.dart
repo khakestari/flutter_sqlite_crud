@@ -38,7 +38,6 @@ class _MyAppState extends State<MyApp> {
 
   getName(name) {
     this.name = name;
-    print(this.name);
   }
 
   getDescription(description) {
